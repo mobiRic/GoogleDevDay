@@ -2,8 +2,10 @@ package mobi.glowworm.demo.devday;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,6 +13,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /* Top toolbar */
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+       /* Bottom toolbar. */
+        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
+        bottomToolbar.inflateMenu(R.menu.menu_bottom);
     }
 
     @Override
