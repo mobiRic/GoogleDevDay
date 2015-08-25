@@ -3,6 +3,9 @@ package mobi.glowworm.demo.devday;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     private CollapsingToolbarLayout ctb;
     private int mutedColor;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
 
     @Override
@@ -63,6 +68,36 @@ public class MainActivity extends AppCompatActivity {
                 ctb.setContentScrimColor(mutedColor);
             }
         });
+
+	       /* NavigationView */
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+
+        // On click of menu icon on toolbar
+        toolbar.setNavigationIcon(R.drawable.ic_menu_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        // On click of the navigation menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            // This method will trigger on item Click of navigation menu
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                // Set item in checked state
+                menuItem.setChecked(true);
+
+                //TODO: handle navigation
+
+                //Closing drawer on item click
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
+
     }
 
     @Override

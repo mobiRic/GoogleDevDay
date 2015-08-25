@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:icon="@android:drawable/ic_delete"
+            android:title="One" />
+        <item
+            android:icon="@android:drawable/ic_input_add"
+            android:title="Two" />
+        <item
+            android:icon="@android:drawable/ic_input_get"
+            android:title="Three" />
+    </group>
+</menu>
