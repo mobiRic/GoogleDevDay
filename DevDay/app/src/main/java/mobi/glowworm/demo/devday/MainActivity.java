@@ -1,7 +1,11 @@
 package mobi.glowworm.demo.devday;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -10,10 +14,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import static mobi.glowworm.demo.devday.R.string.app_name;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private CollapsingToolbarLayout ctb;
+    private int mutedColor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +46,23 @@ public class MainActivity extends AppCompatActivity {
         // Add 8 cards
         MyAdapter adapter = new MyAdapter(new String[8]);
         recyclerView.setAdapter(adapter);
+
+        /* Collapsing toolbar */
+        ctb = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        ctb.setTitle(getString(app_name));
+        /* Define the image */
+        ImageView image = (ImageView) findViewById(R.id.image);
+        /* Decode bitmap from the image */
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image);
+        /* Generate palette from the image bitmap */
+        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                mutedColor = palette.getMutedColor(R.attr.colorPrimary);
+                       /* Set toolbar color from the palette */
+                ctb.setContentScrimColor(mutedColor);
+            }
+        });
     }
 
     @Override
