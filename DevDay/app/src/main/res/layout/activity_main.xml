@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--TOP TOOLBAR-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -11,7 +12,28 @@
         android:elevation="8dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:title="@string/app_name" />
-    <!-- TextView -->
+
+    <!--COORDINATOR LAYOUT-->
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:scrollbars="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </android.support.design.widget.CoordinatorLayout>
+
+    <!--BOTTOM TOOLBAR-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/bottom_toolbar"
         android:layout_width="match_parent"

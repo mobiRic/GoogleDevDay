@@ -2,9 +2,15 @@ package mobi.glowworm.demo.devday;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
        /* Bottom toolbar. */
         Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
         bottomToolbar.inflateMenu(R.menu.menu_bottom);
+
+        /* Create and customize RecyclerView. */
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Add 8 cards
+        MyAdapter adapter = new MyAdapter(new String[8]);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -43,5 +57,43 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    /* Create RecyClerView Adapter. */
+    public static class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+        private String[] mDataset;
+
+        public static class ViewHolder extends RecyclerView.ViewHolder {
+            public View view;
+            public TextView title;
+
+            public ViewHolder(View v) {
+                super(v);
+                view = v;
+                title = (TextView) v.findViewById(R.id.card_title);
+            }
+        }
+
+        public MyAdapter(String[] myDataset) {
+            mDataset = myDataset;
+        }
+
+        @Override
+        public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View cardview = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.cardview, parent, false);
+            return new ViewHolder(cardview);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            holder.title.setText("Card " + (position + 1));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mDataset.length;
+        }
     }
 }
