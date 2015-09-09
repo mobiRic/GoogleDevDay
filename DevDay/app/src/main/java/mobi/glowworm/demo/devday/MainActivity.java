@@ -2,6 +2,7 @@ package mobi.glowworm.demo.devday;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -9,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +21,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.android.supportv7.widget.decorator.DividerItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static mobi.glowworm.demo.devday.R.string.app_name;
 
@@ -48,11 +53,52 @@ public class MainActivity extends AppCompatActivity {
 
         /* Create and customize RecyclerView. */
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // Add 8 cards
         MyAdapter adapter = new MyAdapter(new String[8]);
-        recyclerView.setAdapter(adapter);
+//        recyclerView.setAdapter(adapter);
+
+        //Your RecyclerView
+//        recyclerView = (RecyclerView) findViewById(R.id.list);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        //Your RecyclerView.Adapter
+//        SimpleAdapter mAdapter = new SimpleAdapter(this, new String[]{
+//                "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",
+//        });
+
+
+        //This is the code to provide a sectioned list
+        List<SimpleSectionedRecyclerViewAdapter.Section> sections =
+                new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+
+        //Sections
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, "Section 1"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(1, "Section 2"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(2, "Section 3"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(5, "Section 4"));
+
+        //Add your adapter to the sectionAdapter
+        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+        SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new
+                SimpleSectionedRecyclerViewAdapter(this, R.layout.section, R.id.section_text, adapter);
+
+        mSectionedAdapter.setSections(sections.toArray(new SimpleSectionedRecyclerViewAdapter.Section[sections.size()]));
+
+        //Apply this adapter to the RecyclerView
+        recyclerView.setAdapter(mSectionedAdapter);
+
+
+
+
+
+
+
+
+
 
         /* Collapsing toolbar */
         ctb = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -76,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         // On click of menu icon on toolbar
-        toolbar.setNavigationIcon(R.drawable.ic_menu_24dp);
+//        toolbar.setNavigationIcon(R.drawable.ic_menu_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
